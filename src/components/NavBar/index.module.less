@@ -1,0 +1,95 @@
+// 导航栏容器
+.navbarContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--primary-color);
+}
+
+// 内容包装器
+.contentWrapper {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px;
+}
+
+// Tab 内容区
+.tabContent {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+    
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    }
+    
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+}
+
+// 底部导航
+.nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 80px;
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+    background-color: var(--primary-background) !important;
+    border-top: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    z-index: 1000;
+    
+    :global(.MuiBottomNavigation-root) {
+        height: 100% !important;
+        background-color: var(--primary-background) !important;
+    }
+    
+    :global(.MuiPaper-root) {
+        background-color: var(--primary-background) !important;
+    }
+}
+
+// 导航项
+.navItem {
+    flex: 1 !important;
+    min-width: auto !important;
+    padding: 0 !important;
+    color: var(--secondary-color) !important;
+    font-size: 20px !important;
+    transition: color 0.3s ease;
+    
+    :global(.MuiBottomNavigationAction-label) {
+        font-size: 20px !important;
+    }
+    
+    :global(.MuiSvgIcon-root) {
+        font-size: 42px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    &:global(.Mui-selected) {
+        color: var(--primary-color) !important;
+        font-weight: 500;
+        
+        :global(.MuiSvgIcon-root) {
+            font-size: 42px !important;
+        }
+    }
+}

@@ -1,0 +1,173 @@
+// 分类内容容器
+.cateContentContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    // 页面高度 - 底部导航栏高度(80px)
+    height: calc(100vh - 80px);
+    background-color: var(--primary-background);
+}
+
+// 子 Tab 栏
+.subTabs {
+    background-color: var(--primary-color) !important;
+    border-right: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    width: 150px;
+
+    :global(.MuiTabs-indicator) {
+        background-color: var(--primary-color) !important;
+        display: none;
+    }
+}
+
+// 子 Tab 项
+.subTabItem {
+    min-width: 150px !important;
+    width: 150px !important;
+    color: var(--primary-background) !important;
+    font-size: 24px !important;
+    text-transform: none !important;
+    background-color: var(--primary-color);
+    padding: 0 !important;
+
+    &:global(.Mui-selected) {
+        color: var(--primary-color) !important;
+        background-color: var(--primary-background) !important;
+    }
+
+    &:global(.Mui-selected):global(.MuiTab-root) {
+        color: var(--primary-color) !important;
+        font-size: 24px !important;
+        font-weight: normal !important;
+        padding: 0 !important;
+    }
+
+    :global(.MuiTab-iconWrapper) {
+        margin-bottom: 4px !important;
+        font-size: 20px !important;
+    }
+}
+
+// 子 Tab 内容包装
+.subTabsContent {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 216px);
+}
+
+// Tab 内容区
+.tabContent {
+    width: 600px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+}
+
+// 子 Tab 图片容器
+.subTabImageContainer {
+    width: 600px;
+    height: 750px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    position: relative;
+    background: var(--secondary-background);
+
+    // 子 Tab 图片
+    .subTabImage {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+
+    // 子 Tab 图片标题
+    .subTabImageTitle {
+        display: block;
+        font-size: 36px;
+        font-weight: 400;
+        color: var(--primary-color);
+        z-index: 1;
+        padding-left: 24px;
+        margin-bottom: 16px;
+    }
+
+    // 子 Tab 图片副标题
+    .subTabImageSubtitle {
+        display: block;
+        font-size: 32px;
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-top: 4px;
+        z-index: 1;
+        padding-left: 24px;
+    }
+}
+
+// 子 Tab 产品列表
+.subTabProductList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding: 12px;
+    margin-top: 24px;
+
+    // 产品卡片
+    .productCardContainer {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+        border: 1px solid var(--secondary-color);
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        padding-top: 0;
+        img {
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            object-fit: contain;
+        }
+        .productTags {
+            font-size: 14px;
+            color: var(--secondary-color);
+        }
+        .productTitle{
+            font-size: 24px;
+            font-weight: normal;
+            margin-top: 4px;
+            color: var(--primary-color);
+        }
+        .productPrice{
+            font-size: 24px;
+            font-weight: normal;
+            margin-top: auto;
+            color: var(--primary-color);
+        }
+    }
+}
