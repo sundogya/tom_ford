@@ -52,7 +52,8 @@
 // 子 Tab 内容包装
 .subTabsContent {
     flex: 1;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     height: calc(100vh - 216px);
@@ -61,8 +62,8 @@
 // Tab 内容区
 .tabContent {
     width: 600px;
-    height: 100%;
-    overflow-y: auto;
+    height: auto;
+    overflow-y: visible;
     overflow-x: hidden;
     flex-shrink: 0;
 

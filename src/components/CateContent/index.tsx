@@ -23,9 +23,26 @@ interface CateContentProps {
 }
 export type { CateContent, SubTab };
 function ProductCard({ product }: { product: CateContent }) {
+    // Generate responsive image URLs with different sizes
+    const getResponsiveImageUrl = (baseUrl: string| undefined, width: number) => {
+        // Add width parameter if the URL supports it, or use the base URL
+        const url = new URL(baseUrl || '', window.location.origin);
+        url.searchParams.set('width', `${width}px`);
+        return url.toString();
+    };
+
     return (<div className={css.productCardContainer}>
         <div className={css.productCard}>
-            <img src={product.thumb} alt={product.title || 'product'} />
+            <img 
+                src={getResponsiveImageUrl(product.thumb, 400)} 
+                srcSet={`
+                    ${getResponsiveImageUrl(product.thumb, 300)} 300w,
+                    ${getResponsiveImageUrl(product.thumb, 400)} 400w,
+                    ${getResponsiveImageUrl(product.thumb, 600)} 600w
+                `}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                alt={product.title || 'product'} 
+            />
         </div>
         {product.tags ?
             (<span className={css.productTags}>{(product.tags || []).map(tag => tag).join(', ')}</span>)
@@ -42,21 +59,22 @@ export default function CateContent({ subTabs }: CateContentProps) {
 
     useEffect(() => {
         const handleScroll = () => {
+            console.log('Content scrolled');
             if (!contentRef.current) return;
             
-            const scrollTop = contentRef.current.scrollTop;
-            const containerHeight = contentRef.current.clientHeight;
-            
-            // 找到当前滚动位置对应的 tab
+            // 监听 subTabsContent 容器内的滚动
+            const scrollContainer = contentRef.current;
             let currentIndex = 0;
+            
+            // 遍历所有 tab 内容检查哪个在视口
             for (let i = 0; i < tabContentRefs.current.length; i++) {
                 const element = tabContentRefs.current[i];
                 if (element) {
                     const rect = element.getBoundingClientRect();
-                    const relativeTop = element.offsetTop - scrollTop;
+                    const containerRect = scrollContainer.getBoundingClientRect();
                     
-                    // 如果该元素在视口中间以上，则认为是当前 tab
-                    if (relativeTop < containerHeight / 2) {
+                    // 如果该元素在容器视口中间以上，则认为是当前 tab
+                    if (rect.top - containerRect.top < containerRect.height / 2) {
                         currentIndex = i;
                     }
                 }
@@ -72,6 +90,7 @@ export default function CateContent({ subTabs }: CateContentProps) {
         
         const contentElement = contentRef.current;
         if (contentElement) {
+            console.log('Adding scroll and wheel event listeners', contentElement);
             contentElement.addEventListener('scroll', handleScroll);
             contentElement.addEventListener('wheel', handleWheel, { passive: true });
             return () => {
@@ -118,8 +137,18 @@ export default function CateContent({ subTabs }: CateContentProps) {
                         className={css.tabContent}
                         ref={(el) => tabContentRefs.current[index] = el}
                     >
-                        <div className={css.subTabImageContainer}>
-                            <img src={tab.image} alt={tab.title} className={css.subTabImage} />
+                    <div className={css.subTabImageContainer}>
+                            <img 
+                                src={tab.image?.split('?')[0] + '?width=1200px'} 
+                                srcSet={`
+                                    ${tab.image?.split('?')[0]}?width=600px 600w,
+                                    ${tab.image?.split('?')[0]}?width=1200px 1200w,
+                                    ${tab.image?.split('?')[0]}?width=1600px 1600w
+                                `}
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 600px"
+                                alt={tab.title} 
+                                className={css.subTabImage} 
+                            />
                             <span className={css.subTabImageSubtitle}>{tab.subTitle?.toLocaleUpperCase()}</span>
                             <span className={css.subTabImageTitle}>{tab.title}</span>
                         </div>
