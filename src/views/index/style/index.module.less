@@ -1,37 +1,215 @@
-.gift {
+.cate {
     background-color: var(--primary-background);
     height: calc(100vh - 110px);
     overflow: hidden;
+
     // AppBar 和 Tabs 容器样式
     :global(.MuiAppBar-root) {
         background-color: var(--primary-color) !important;
         box-shadow: none;
     }
-    
+
     :global(.MuiTabs-root) {
         background-color: var(--primary-color);
-        
+
         :global(.MuiTabs-flexContainer) {
             width: auto;
         }
     }
-    
+
     // Tabs 指示器样式
     :global(.MuiTabs-indicator) {
         background-color: var(--primary-background) !important;
         height: 4px !important;
     }
-    
+
     // Tab 项样式
     :global(.MuiTab-root) {
         color: var(--primary-background) !important;
         font-size: 28px !important;
         text-transform: none !important;
         min-width: 150px !important;
-        
+
         &:global(.Mui-selected) {
             color: var(--primary-background) !important;
             font-weight: 700 !important;
+        }
+    }
+}
+
+.mine {
+    height: calc(100vh - 110px);
+    overflow-y: auto;
+    padding-bottom: 40px;
+
+    .personInfo {
+        width: 750px;
+        height: 360px;
+        /* 深紫色保持到 40%，然后过渡回酒红色 */
+        background: linear-gradient(to bottom, #120025 0%, #120025 40%, #8b001a 100%);
+        color: var(--primary-color);
+        padding: 30px;
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            font-size: 28px;
+
+            .hello {
+                font-size: 36px;
+                letter-spacing: 6px;
+                margin-top: -4px;
+            }
+
+            .toInformation {
+                border-bottom: 1px solid var(--primary-color);
+                display: inline-flex;
+                align-self: flex-start;
+                /* 不让在父列布局下拉伸，宽度随内容 */
+            }
+        }
+
+        .vipInfo {
+            margin-top: 20px;
+            font-size: 28px;
+            display: flex;
+            gap: 150px;
+
+            .vipLeft {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .currentLevel {
+                    font-weight: 400;
+                }
+
+                .currentPoints {
+                    font-size: 32px;
+                }
+            }
+
+            .vipRight {
+                color: var(--secondary-color);
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .nextLevelName {
+                    font-weight: 400;
+                }
+
+                .nextLevelPoints {
+                    font-size: 32px;
+                }
+            }
+        }
+
+        .vipAdvantage {
+            margin-top: 30px;
+            font-size: 32px;
+            display: flex;
+            gap: 120px;
+
+            span {
+                border-bottom: 1px solid var(--primary-color);
+                padding-bottom: 4px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .bannerResource {
+        width: 750px;
+        height: 300px;
+        margin-top: 40px;
+        background: linear-gradient(to bottom, #120025 0%, #120025 40%, #8b001a 100%);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 20px;
+        font-size: 32px;
+        line-height: 40px;
+
+        .bannerLeft {
+            display: flex;
+            flex-direction: column;
+            color: var(--primary-color);
+            padding-top: 1.4rem;
+            padding-left: 20px;
+            letter-spacing: -2px;
+
+            .leftSmall {
+                font-size: 28px;
+
+                &.toResource {
+                    cursor: pointer;
+                    border-bottom: 1px solid var(--primary-color);
+                    width: fit-content;
+                }
+            }
+        }
+
+        .bannerRight {
+            img {
+                width: 240px;
+                height: 200px;
+            }
+        }
+    }
+
+    .orderTabs {
+        margin-top: 60px;
+        width: 750px;
+        color: var(--primary-background);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+
+        .orderTitle {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .orderContent {
+            display: flex;
+            justify-content: space-between;
+
+            span {
+                cursor: pointer;
+                font-size: 28px;
+                padding: 4px 0;
+                border-bottom: 1px solid var(--primary-background);
+            }
+        }
+    }
+
+    .navList {
+        width: 750px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 60px;
+        padding: 0 20px;
+
+        .navItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 28px;
+            padding: 0.75rem 0;
+            border-top: 1px solid var(--secondary-background);
+            &:nth-last-child(1) {
+                border-bottom: 1px solid var(--secondary-background);
+            }
+            .navRight {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                color: var(--secondary-color);
+                :global(.MuiSvgIcon-root) {
+                    font-size: 36px;
+                }
+            }
         }
     }
 }

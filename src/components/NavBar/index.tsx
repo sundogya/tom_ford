@@ -8,24 +8,24 @@ interface NavBarProps {
         icon: React.ReactNode;
         content?: React.ReactNode;
     }>;
-    currentTab?: number;
+    currentTab: number;
+    onTabChange: (newIndex: number) => void;
 }
 
-export default function NavBar({ tabs, currentTab }: NavBarProps) {
-    const [activeIndex, setActiveIndex] = useState(0);
+export default function NavBar({ tabs, currentTab, onTabChange }: NavBarProps) {
     const [renderedTabs, setRenderedTabs] = useState<number[]>([0]);
     
+    // 同步外部 currentTab 到内部状态（当 parent 想要控制时）
     useEffect(() => {
-        setActiveIndex(currentTab || 0);
-        // 标记当前 tab 已渲染
-        setRenderedTabs(prev =>
-            prev.includes(activeIndex) ? prev : [...prev, activeIndex]
-        );
-    }, [activeIndex]);
+        const idx = typeof currentTab === 'number' ? currentTab : undefined;
+        if (typeof idx === 'number') {
+            setRenderedTabs(prev => (prev.includes(idx) ? prev : [...prev, idx]));
+        }
+    }, [currentTab]);
 
     const changeActiveIndex = (e: React.SyntheticEvent, newValue: number) => {
         console.log('Tab changed to index:', e, newValue);
-        setActiveIndex(newValue);
+        if (onTabChange) onTabChange(newValue);
     }
 
     return (
@@ -35,7 +35,7 @@ export default function NavBar({ tabs, currentTab }: NavBarProps) {
                     <div
                         key={index}
                         className={css.tabContent}
-                        style={{ display: activeIndex === index ? 'block' : 'none' }}
+                        style={{ display: currentTab === index ? 'block' : 'none' }}
                     >
                         {renderedTabs.includes(index) ? tab.content : null}
                     </div>
@@ -44,7 +44,7 @@ export default function NavBar({ tabs, currentTab }: NavBarProps) {
             <BottomNavigation
                 className={css.nav}
                 showLabels
-                value={activeIndex}
+                value={currentTab}
                 onChange={changeActiveIndex}
             >
                 {tabs.map((tab, index) => (

@@ -1,23 +1,43 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { IndexContext, useIndexValue } from "@/context/IndexContext";
 import NavBar from "@/components/NavBar";
 import css from "./style/index.module.less";
 import { AccountCircle, ShoppingBagOutlined, RedeemOutlined, Reorder, HomeFilled } from '@mui/icons-material';
-import Category from "./category";
-import Home from "./home";
-import Gift from "./gift";
-import ShoppingCart from "./shoppingcart";
-import Mine from "./mine";
+const Home = lazy(() => import('./home'));
+const Category = lazy(() => import('./category'));
+const Gift = lazy(() => import('./gift'));
+const ShoppingCart = lazy(() => import('./shoppingcart'));
+const Mine = lazy(() => import('./mine'));
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function HomeContent() {
     const tabs = [
-        { title: '首页', icon: <HomeFilled />, content: <Home /> },
-        { title: '全部产品', icon: <Reorder />, content: <Category /> },
-        { title: '星品试用', icon: <RedeemOutlined />, content: <Gift /> },
-        { title: '购物车', icon: <ShoppingBagOutlined />, content: <ShoppingCart /> },
-        { title: '个人中心', icon: <AccountCircle />, content: <Mine /> },
+        { title: '首页', icon: <HomeFilled />, content: (
+            <Suspense fallback={<div>加载中...</div>}>
+                <Home />
+            </Suspense>
+        ) },
+        { title: '全部产品', icon: <Reorder />, content: (
+            <Suspense fallback={<div>加载中...</div>}>
+                <Category />
+            </Suspense>
+        ) },
+        { title: '星品试用', icon: <RedeemOutlined />, content: (
+            <Suspense fallback={<div>加载中...</div>}>
+                <Gift />
+            </Suspense>
+        ) },
+        { title: '购物车', icon: <ShoppingBagOutlined />, content: (
+            <Suspense fallback={<div>加载中...</div>}>
+                <ShoppingCart />
+            </Suspense>
+        ) },
+        { title: '个人中心', icon: <AccountCircle />, content: (
+            <Suspense fallback={<div>加载中...</div>}>
+                <Mine />
+            </Suspense>
+        ) },
     ];
-
     useEffect(() => {
         console.log("Home mounted");
         return () => {
@@ -27,9 +47,25 @@ function HomeContent() {
 
     return (
         <div className={css.indexModule}>
-            <NavBar tabs={tabs} currentTab={1} />
+            {/* 将路由与底部导航关联：currentTab 从路径派生，点击通过 onTabChange 导航 */}
+            <NavWrapper tabs={tabs} />
         </div>
     );
+}
+
+function NavWrapper({ tabs }: { tabs: any }) {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const paths = ['/index/home','/index/category','/index/gift','/index/shoppingcart','/index/mine'];
+    const idx = paths.indexOf(location.pathname);
+    const currentIndex = idx === -1 ? 0 : idx;
+
+    const handleTabChange = (newIndex: number) => {
+        const to = paths[newIndex] || paths[0];
+        navigate(to);
+    }
+
+    return <NavBar tabs={tabs} currentTab={currentIndex} onTabChange={handleTabChange} />
 }
 
 export default function Index() {

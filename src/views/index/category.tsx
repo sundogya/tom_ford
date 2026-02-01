@@ -6,11 +6,11 @@ import css from './style/index.module.less';
 import { useEffect, useState } from 'react';
 import { useIndexContext } from '@/context/IndexContext';
 import CateContent from '@/components/CateContent';
-const Gift = () => {
+const CateGory = () => {
     const { cateTabs, setCateTabs } = useIndexContext();
     const [cateTab, setCateTab] = useState(2)
     useEffect(() => {
-        console.log("Gift mounted");
+        console.log("CateGory mounted");
         if (cateTabs?.length === 0) {
             setCateTabs([{  
                 id: 1,
@@ -79,14 +79,14 @@ const Gift = () => {
             }]);
         }
         return () => {
-            console.log("Gift unmounted");
+            console.log("CateGory unmounted");
         };
     }, []);
     const handleChange = (_e: React.SyntheticEvent, newValue: number) => {
         setCateTab(newValue);
     }
     return (<>
-        <div className={css.gift}>
+        <div className={css.cate}>
             <AppBar position="static">
                 <Tabs value={cateTab} onChange={handleChange} aria-label="basic tabs example" variant="fullWidth">
                     {cateTabs?.map((tab, index) => (
@@ -99,4 +99,4 @@ const Gift = () => {
     </>)
 }
 
-export default Gift;
+export default CateGory;

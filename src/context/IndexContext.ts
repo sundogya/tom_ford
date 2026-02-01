@@ -4,6 +4,7 @@ interface CateTab {
   id: string | number;
   title: string;
   subTabs: SubTab[];
+  [key: string]: unknown;
 }
 export interface IndexContextType {
   cateTabs?: CateTab[];
