@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { HomeContext, useHomeValue } from "../../context/HomeContext";
 import NavBar from "@/components/NavBar";
 import { AccountCircle, ShoppingBagOutlined, RedeemOutlined, Reorder, HomeFilled } from '@mui/icons-material';
 
 function HomeContent() {
+    const [currentTab, setCurrentTab] = useState(0);
     const tabs = [
         { title: '首页', icon: <HomeFilled /> },
         { title: '全部产品', icon: <Reorder /> },
@@ -20,7 +21,7 @@ function HomeContent() {
     }, []);
 
     return (
-        <NavBar tabs={tabs} />
+        <NavBar tabs={tabs} currentTab={currentTab} onTabChange={setCurrentTab} />
     );
 }
 

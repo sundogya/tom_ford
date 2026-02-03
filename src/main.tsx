@@ -8,7 +8,7 @@ import routes from './router/index.tsx'
 import { RouterProvider } from 'react-router-dom'
 import { theme } from './config/theme'
 import 'reset-css/reset.css'
-import './index.module.less'
+import './global.less'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

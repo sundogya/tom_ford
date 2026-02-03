@@ -76,7 +76,15 @@ export const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
+          backgroundColor: 'var(--primary-background)',
           borderRadius: pxToRem(4),
+        },
+      },
+    },
+    MuiBottomNavigation: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'var(--primary-background)',
         },
       },
     },

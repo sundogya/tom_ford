@@ -135,7 +135,9 @@ export default function CateContent({ subTabs }: CateContentProps) {
                     <div
                         key={index}
                         className={css.tabContent}
-                        ref={(el) => tabContentRefs.current[index] = el}
+                        ref={(el) => {
+                            tabContentRefs.current[index] = el;
+                        }}
                     >
                     <div className={css.subTabImageContainer}>
                             <img 

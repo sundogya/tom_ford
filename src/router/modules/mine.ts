@@ -8,6 +8,13 @@ const routes: MyRoute[] = [
             title: 'Mine Page'
         }
     },
+    {
+        path: 'mine/information',
+        lazy: async () => ({ Component: (await import('@/views/mine/infomartion.tsx')).default }),
+        meta: {
+            title: 'Mine Information Page'
+        }
+    },
 
 ];
 export default routes
