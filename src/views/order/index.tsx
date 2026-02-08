@@ -52,7 +52,7 @@ const mockOrders: { list: Order[], total: number } = {
     list: [
         {
             id: '1234567890',
-            status: 'pendingPayment',
+            status: 'cancel',
             name: '「烟熏樱桃」暗樱撩情香水',
             amount: 1,
             price: 3250,
@@ -98,7 +98,7 @@ const mockOrders: { list: Order[], total: number } = {
         },
         {
             id: '1234567891',
-            status: 'pendingPayment',
+            status: 'cancel',
             name: '「烟熏樱桃」暗樱撩情香水',
             amount: 1,
             price: 3250,
@@ -225,7 +225,7 @@ export default function Home() {
     const fetchOrders = useCallback(() => {
         // 模拟接口请求，根据订单类型和页码获取订单数据
         // 这里可以替换为实际的接口请求逻辑
-        if (['all', 'pendingPayment'].includes(orderType)) {
+        if (['all'].includes(orderType)) {
             setOrderList(mockOrders.list);
             setTotal(mockOrders.total);
         } else {
