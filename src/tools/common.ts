@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * 自定义 hook：跳过初始化，只在依赖项更新时执行 effect
@@ -7,7 +8,7 @@ import { useEffect, useRef } from 'react';
  */
 export const useEffectAfterMount = (effect: () => void, deps: any[]) => {
     const isFirstRender = useRef(true);
-    
+
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false;
@@ -15,4 +16,14 @@ export const useEffectAfterMount = (effect: () => void, deps: any[]) => {
         }
         effect();
     }, deps);
+};
+
+export const useToNav = () => {
+    const navigate = useNavigate();
+    return useCallback(
+        (path: string) => {
+            navigate(path);
+        },
+        [navigate]
+    );
 };

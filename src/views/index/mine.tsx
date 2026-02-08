@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import css from "./style/index.module.less";
-import { useNavigate } from "react-router-dom";
 import PersonInfo from "./components/PersonInfo";
 import BannerResource from "./components/BannerResource";
 import OrderTabs from "./components/OrderTabs";
 import NavList from "./components/NavList";
 import type { NavItem, OrderInfo, VipInfo } from "./mine.types";
+import { useToNav } from "../../tools/common";
 const Mine = () => {
+    const toNav = useToNav();
     const [vipInfo, setVipInfo] = useState<VipInfo>({
         vipLevel: "",
         points: 0,
@@ -20,13 +21,6 @@ const Mine = () => {
         completed: 0,
     });
     const [navList, setNavList] = useState<Array<NavItem>>([]);
-    const navigate = useNavigate();
-    const toNav = useCallback(
-        (path: string) => {
-            navigate(path);
-        },
-        [navigate]
-    );
     useEffect(() => {
         setVipInfo({
             vipLevel: '银熠会员',
@@ -36,9 +30,9 @@ const Mine = () => {
         });
         setOrderInfo({
             pendingPayment: 2,
-            toBeShipped: 1,
-            shipped: 3,
-            completed: 5
+            toBeShipped: 0,
+            shipped: 0,
+            completed: 0
         });
         setNavList([
             { name: '礼盒定制', path: '/gift/custom' },
