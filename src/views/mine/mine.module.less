@@ -1,0 +1,53 @@
+.information {
+	font-size: 24px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2em;
+
+	:global(.MuiFormControl-root),
+	:global(.MuiInputBase-root) {
+		width: 690px;
+		font-size: 24px;
+		border-radius: 0;
+	}
+
+	:global(.MuiOutlinedInput-root),
+	:global(.MuiOutlinedInput-notchedOutline) {
+		border-radius: 0;
+	}
+
+	:global(.MuiInputLabel-root),
+	:global(.MuiSelect-select),
+	:global(.MuiInputBase-input) {
+		font-size: 24px;
+	}
+
+	:global(.MuiMenuItem-root) {
+		background-color: var(--primary-color);
+		font-size: 24px;
+	}
+
+	:global(.MuiMenuItem-root.Mui-selected) {
+		background-color: var(--secondary-color);
+	}
+}
+
+.menuPaper {
+	background-color: var(--primary-color);
+	font-size: 24px;
+}
+
+.menuList {
+	background-color: var(--primary-color);
+	font-size: 24px;
+
+	:global(.MuiMenuItem-root) {
+		background-color: var(--primary-color);
+		font-size: 24px;
+	}
+
+	:global(.MuiMenuItem-root.Mui-selected) {
+		background-color: var(--secondary-color);
+	}
+}
