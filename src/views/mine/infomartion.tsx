@@ -8,7 +8,7 @@ interface User {
     age?: number;
     sex?: 'male' | 'female';
     province?: string;
-    mobile: string;
+    mobile?: string;
 }
 export default function Home() {
     let [user, setUser] = useState<User>({});
@@ -52,7 +52,7 @@ export default function Home() {
     const handleUpdate = () => {
         console.log(user, "handleUpdate");
     }
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>, field: keyof User) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: keyof User) => {
         console.log(event.target.value, user, "handleChange");
         setUser({ ...user, [field]: event.target.value });
     }
