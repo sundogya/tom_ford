@@ -1,0 +1,208 @@
+.pageContainer {
+    width: 750px;
+    min-height: 100vh;
+    background-color: var(--primary-color);
+    color: var(--primary-background);
+    padding-bottom: 80px;
+}
+
+.heroBanner {
+    width: 750px;
+    padding: 40px 30px;
+    background: linear-gradient(to bottom, #120025 0%, #120025 40%, #8b001a 100%);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    .heroText {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+
+        .heroTag {
+            font-size: 22px;
+            letter-spacing: 4px;
+            color: #d4b8c1;
+        }
+
+        .heroTitle {
+            font-size: 36px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            line-height: 48px;
+        }
+
+        .heroDesc {
+            font-size: 24px;
+            line-height: 38px;
+            color: #e6dce0;
+        }
+    }
+
+    .heroImage {
+        width: 220px;
+        height: 220px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}
+
+.content {
+    padding: 36px 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.sectionTitle {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.perkGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.perkCard {
+    border: 2px solid #e5e5e5;
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .perkBadge {
+        font-size: 22px;
+        color: #8b001a;
+        letter-spacing: 1px;
+    }
+
+    .perkTitle {
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .perkDesc {
+        font-size: 24px;
+        color: #666666;
+        line-height: 36px;
+    }
+}
+
+.joinCard {
+    border: 2px solid var(--primary-background);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .joinTop {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+
+        .joinLabel {
+            font-size: 24px;
+            color: var(--secondary-color);
+        }
+
+        .joinCode {
+            font-size: 34px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-top: 6px;
+        }
+
+        .copyBtn {
+            padding: 14px 28px;
+            border: 2px solid var(--primary-background);
+            background-color: var(--primary-color);
+            color: var(--primary-background);
+            font-size: 24px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+    }
+
+    .joinHint {
+        font-size: 24px;
+        color: #555555;
+        line-height: 38px;
+        padding-top: 16px;
+        border-top: 1px solid #eeeeee;
+    }
+}
+
+.toastNotice {
+    padding: 20px 24px;
+    background-color: #f2f2f2;
+    border-left: 6px solid var(--primary-background);
+    font-size: 26px;
+    line-height: 38px;
+}
+
+.actionGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.primaryBtn {
+    width: 100%;
+    height: 92px;
+    background-color: var(--primary-background);
+    color: var(--primary-color);
+    font-size: 28px;
+    letter-spacing: 2px;
+    border: none;
+    cursor: pointer;
+
+    &:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
+}
+
+.outlineBtn {
+    width: 100%;
+    height: 88px;
+    background-color: var(--primary-color);
+    color: var(--primary-background);
+    font-size: 28px;
+    letter-spacing: 2px;
+    border: 2px solid var(--primary-background);
+    cursor: pointer;
+}
+
+.ruleCard {
+    background-color: #f8f8f8;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .ruleTitle {
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .ruleItem {
+        font-size: 24px;
+        color: #555555;
+        line-height: 38px;
+    }
+}

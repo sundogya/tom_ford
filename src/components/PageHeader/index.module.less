@@ -1,0 +1,43 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 750px;
+    height: 96px;
+    padding: 0 30px;
+    background-color: var(--primary-background);
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--secondary-background);
+
+    .backBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        color: var(--primary-color);
+        cursor: pointer;
+
+        :global(.MuiSvgIcon-root) {
+            font-size: 42px;
+            color: var(--primary-color);
+        }
+    }
+
+    .headerTitle {
+        font-size: 32px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--primary-color);
+    }
+
+    .rightSlot {
+        min-width: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+}

@@ -5,7 +5,6 @@ import css from "./style/index.module.less";
 import { AccountCircle, ShoppingBagOutlined, RedeemOutlined, Reorder, HomeFilled } from '@mui/icons-material';
 const Home = lazy(() => import('./home'));
 const Category = lazy(() => import('./category'));
-const Gift = lazy(() => import('./gift'));
 const ShoppingCart = lazy(() => import('./shoppingcart'));
 const Mine = lazy(() => import('./mine'));
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -22,11 +21,7 @@ function HomeContent() {
                 <Category />
             </Suspense>
         ) },
-        { title: '星品试用', icon: <RedeemOutlined />, content: (
-            <Suspense fallback={<div>加载中...</div>}>
-                <Gift />
-            </Suspense>
-        ) },
+        { title: '星品试用', icon: <RedeemOutlined /> },
         { title: '购物车', icon: <ShoppingBagOutlined />, content: (
             <Suspense fallback={<div>加载中...</div>}>
                 <ShoppingCart />
@@ -56,7 +51,7 @@ function HomeContent() {
 function NavWrapper({ tabs }: { tabs: any }) {
     const navigate = useNavigate();
     const location = useLocation();
-    const paths = ['/index/home','/index/category','/index/gift','/index/shoppingcart','/index/mine'];
+    const paths = ['/index/home', '/index/category', '/gift/try', '/index/shoppingcart', '/index/mine'];
     const idx = paths.indexOf(location.pathname);
     const currentIndex = idx === -1 ? 0 : idx;
 
