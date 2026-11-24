@@ -1,6 +1,6 @@
 import { useEffect, lazy, Suspense } from "react";
-import { IndexContext, useIndexValue } from "@/context/IndexContext";
-import NavBar from "@/components/NavBar";
+import { IndexContext, useIndexContext, useIndexValue } from "@/context/IndexContext";
+import NavBar, { type NavTabItem } from "@/components/NavBar";
 import css from "./style/index.module.less";
 import { AccountCircle, ShoppingBagOutlined, RedeemOutlined, Reorder, HomeFilled } from '@mui/icons-material';
 const Home = lazy(() => import('./home'));
@@ -10,7 +10,8 @@ const Mine = lazy(() => import('./mine'));
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function HomeContent() {
-    const tabs = [
+    const { cartCount } = useIndexContext();
+    const tabs: NavTabItem[] = [
         { title: '首页', icon: <HomeFilled />, content: (
             <Suspense fallback={<div>加载中...</div>}>
                 <Home />
@@ -22,7 +23,7 @@ function HomeContent() {
             </Suspense>
         ) },
         { title: '星品试用', icon: <RedeemOutlined /> },
-        { title: '购物车', icon: <ShoppingBagOutlined />, content: (
+        { title: '购物车', icon: <ShoppingBagOutlined />, badge: cartCount, content: (
             <Suspense fallback={<div>加载中...</div>}>
                 <ShoppingCart />
             </Suspense>
@@ -48,7 +49,7 @@ function HomeContent() {
     );
 }
 
-function NavWrapper({ tabs }: { tabs: any }) {
+function NavWrapper({ tabs }: { tabs: NavTabItem[] }) {
     const navigate = useNavigate();
     const location = useLocation();
     const paths = ['/index/home', '/index/category', '/gift/try', '/index/shoppingcart', '/index/mine'];
