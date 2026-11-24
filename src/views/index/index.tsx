@@ -1,6 +1,7 @@
 import { useEffect, lazy, Suspense } from "react";
 import { IndexContext, useIndexContext, useIndexValue } from "@/context/IndexContext";
 import NavBar, { type NavTabItem } from "@/components/NavBar";
+import PageLoading from "@/components/PageLoading";
 import css from "./style/index.module.less";
 import { AccountCircle, ShoppingBagOutlined, RedeemOutlined, Reorder, HomeFilled } from '@mui/icons-material';
 const Home = lazy(() => import('./home'));
@@ -13,23 +14,23 @@ function HomeContent() {
     const { cartCount } = useIndexContext();
     const tabs: NavTabItem[] = [
         { title: '首页', icon: <HomeFilled />, content: (
-            <Suspense fallback={<div>加载中...</div>}>
+            <Suspense fallback={<PageLoading />}>
                 <Home />
             </Suspense>
         ) },
         { title: '全部产品', icon: <Reorder />, content: (
-            <Suspense fallback={<div>加载中...</div>}>
+            <Suspense fallback={<PageLoading />}>
                 <Category />
             </Suspense>
         ) },
         { title: '星品试用', icon: <RedeemOutlined /> },
         { title: '购物车', icon: <ShoppingBagOutlined />, badge: cartCount, content: (
-            <Suspense fallback={<div>加载中...</div>}>
+            <Suspense fallback={<PageLoading />}>
                 <ShoppingCart />
             </Suspense>
         ) },
         { title: '个人中心', icon: <AccountCircle />, content: (
-            <Suspense fallback={<div>加载中...</div>}>
+            <Suspense fallback={<PageLoading />}>
                 <Mine />
             </Suspense>
         ) },
