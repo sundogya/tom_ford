@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PageHeader from "@/components/PageHeader";
+import { generateGiftCardMessage, getGeminiApiKey } from "@/services/gemini";
 import css from "./gift.module.less";
 
 interface BoxStyle {
@@ -33,12 +34,39 @@ export default function GiftCustom() {
     const [engraving, setEngraving] = useState<string>("");
     const [cardMessage, setCardMessage] = useState<string>("");
     const [submitted, setSubmitted] = useState<boolean>(false);
+    const [generatingCard, setGeneratingCard] = useState<boolean>(false);
+    const [aiError, setAiError] = useState<string>("");
 
     const currentBox = boxStyles.find((item) => item.id === selectedBox) ?? boxStyles[0];
     const currentRibbon = ribbonOptions.find((item) => item.id === selectedRibbon) ?? ribbonOptions[0];
 
     const handleSubmit = () => {
         setSubmitted(true);
+    };
+
+    const handleGenerateCardMessage = async () => {
+        if (generatingCard) return;
+        if (!getGeminiApiKey()) {
+            setAiError("请先在首页「AI 私人调香顾问」或 .env.local 中配置 Gemini API Key。");
+            return;
+        }
+        setGeneratingCard(true);
+        setAiError("");
+        try {
+            const generated = await generateGiftCardMessage({
+                boxName: currentBox.name,
+                ribbonName: currentRibbon.name,
+                engraving: engraving.trim() || undefined,
+            });
+            if (generated) {
+                setCardMessage(generated.slice(0, 80));
+                setSubmitted(false);
+            }
+        } catch (err) {
+            setAiError(err instanceof Error ? err.message : "生成礼卡寄语失败，请稍后重试。");
+        } finally {
+            setGeneratingCard(false);
+        }
     };
 
     return (
@@ -109,7 +137,18 @@ export default function GiftCustom() {
                 </div>
 
                 <div className={css.section}>
-                    <span className={css.sectionTitle}>定制礼卡祝福语（选填）</span>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span className={css.sectionTitle}>定制礼卡祝福语（选填）</span>
+                        <button
+                            type="button"
+                            className={css.chipItem}
+                            onClick={handleGenerateCardMessage}
+                            disabled={generatingCard}
+                        >
+                            {generatingCard ? "AI 构思中..." : "AI 礼卡灵感"}
+                        </button>
+                    </div>
+                    {aiError ? <span className={css.sectionSub} style={{ color: "#8b001a" }}>{aiError}</span> : null}
                     <textarea
                         className={css.textareaField}
                         maxLength={80}
