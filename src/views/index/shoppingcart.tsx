@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
     ChatBubbleOutlineSharp,
     CloseSharp,
@@ -145,6 +145,38 @@ const ProductGroupCard = memo(function ProductGroupCard({
     onChangeAmount: (id: string, delta: number) => void;
     onRemove: (id: string) => void;
 }) {
+    const [specOpen, setSpecOpen] = useState(false);
+    const [openUpward, setOpenUpward] = useState(false);
+    const specRef = useRef<HTMLDivElement>(null);
+
+    const handleToggleSpec = () => {
+        if (!specOpen && specRef.current) {
+            const triggerRect = specRef.current.getBoundingClientRect();
+            const scrollContainer = specRef.current.parentElement?.closest('[class*="scrollBody"]');
+            const containerRect = scrollContainer?.getBoundingClientRect();
+            const bottomLimit = containerRect ? containerRect.bottom : window.innerHeight;
+            const topLimit = containerRect ? containerRect.top : 0;
+
+            const estimatedMenuHeight = triggerRect.height * item.specOptions.length + 12;
+            const spaceBelow = bottomLimit - triggerRect.bottom;
+            const spaceAbove = triggerRect.top - topLimit;
+
+            setOpenUpward(spaceBelow < estimatedMenuHeight && spaceAbove > spaceBelow);
+        }
+        setSpecOpen((prev) => !prev);
+    };
+
+    useEffect(() => {
+        if (!specOpen) return;
+        const handleClickOutside = (e: MouseEvent) => {
+            if (specRef.current && !specRef.current.contains(e.target as Node)) {
+                setSpecOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [specOpen]);
+
     return (
         <div className={css.productGroup}>
             <div className={css.productRow}>
@@ -165,20 +197,38 @@ const ProductGroupCard = memo(function ProductGroupCard({
                         </span>
                     </div>
 
-                    <div className={css.specSelectWrap}>
-                        <select
-                            value={item.spec}
-                            onChange={(e) => onChangeSpec(item.id, e.target.value)}
+                    <div className={css.specSelectWrap} ref={specRef}>
+                        <button
+                            type="button"
+                            className={`${css.specTrigger} ${specOpen ? css.specTriggerOpen : ""}`}
+                            onClick={handleToggleSpec}
                         >
-                            {item.specOptions.map((opt) => (
-                                <option key={opt.label} value={opt.label}>
-                                    {opt.label}
-                                </option>
-                            ))}
-                        </select>
-                        <span className={css.specArrow}>
-                            <KeyboardArrowDownSharp />
-                        </span>
+                            <span>{item.spec}</span>
+                            <span className={css.specArrow}>
+                                {specOpen ? <KeyboardArrowUpSharp /> : <KeyboardArrowDownSharp />}
+                            </span>
+                        </button>
+                        {specOpen ? (
+                            <div className={`${css.specMenu} ${openUpward ? css.specMenuUp : ""}`}>
+                                {item.specOptions.map((opt) => {
+                                    const active = opt.label === item.spec;
+                                    return (
+                                        <button
+                                            key={opt.label}
+                                            type="button"
+                                            className={`${css.specOption} ${active ? css.specOptionActive : ""}`}
+                                            onClick={() => {
+                                                onChangeSpec(item.id, opt.label);
+                                                setSpecOpen(false);
+                                            }}
+                                        >
+                                            <span>{opt.label}</span>
+                                            <span>&yen;{opt.price}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        ) : null}
                     </div>
 
                     <div className={css.stepper}>

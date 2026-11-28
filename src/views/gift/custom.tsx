@@ -141,7 +141,7 @@ export default function GiftCustom() {
                         <span className={css.sectionTitle}>定制礼卡祝福语（选填）</span>
                         <button
                             type="button"
-                            className={css.chipItem}
+                            className={css.aiInspirationBtn}
                             onClick={handleGenerateCardMessage}
                             disabled={generatingCard}
                         >
